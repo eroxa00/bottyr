@@ -1,31 +1,32 @@
 from flask import Flask, request
 import telebot
 import os
-print("BOT STARTED")
-print("TOKEN from env:", os.environ.get('BOT_TOKEN')[:10] + "..." if os.environ.get('BOT_TOKEN') else "TOKEN IS NONE!!!")
-print("WEBHOOK_PATH:", WEBHOOK_PATH)
 
 app = Flask(__name__)
 
 TOKEN = os.environ.get('BOT_TOKEN')
 if not TOKEN:
+    print("CRITICAL ERROR: BOT_TOKEN is None or not set!")
     raise ValueError("BOT_TOKEN not set!")
+
+print("BOT STARTED SUCCESSFULLY")
+print("BOT_TOKEN:", TOKEN[:10] + "..." if TOKEN else "MISSING")
+
+# Енді WEBHOOK_PATH-ты анықтаймыз
+WEBHOOK_PATH = f'/{TOKEN}'
+print("WEBHOOK_PATH:", WEBHOOK_PATH)
 
 bot = telebot.TeleBot(TOKEN)
 
-WEBHOOK_PATH = f'/{TOKEN}'
-
+# Қалған код (handler-лар, маршруттар) өзгермейді
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(message, "Сәлем! Мен Әбділданың жаңа боты. Жазып көр!")
+    bot.reply_to(message, "Сәлем! Мен жаңа ботпын. Жазып көр 😎")
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    try:
-        text = message.text or '(ештеңе жазбағансың)'
-        bot.reply_to(message, f"Сен жаздың: {text} ✅")
-    except Exception as e:
-        bot.reply_to(message, "Қате шықты, кешір 😔")
+    text = message.text or '(ештеңе жазбағансың)'
+    bot.reply_to(message, f"Сен жаздың: {text} 🔥")
 
 @app.route('/', methods=['GET'])
 def home():
@@ -41,5 +42,4 @@ def webhook():
     return 'Invalid', 403
 
 if __name__ == '__main__':
-
     app.run(host='0.0.0.0', port=5000)
