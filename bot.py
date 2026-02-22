@@ -1,6 +1,9 @@
 from flask import Flask, request
 import telebot
 import os
+print("BOT STARTED")
+print("TOKEN from env:", os.environ.get('BOT_TOKEN')[:10] + "..." if os.environ.get('BOT_TOKEN') else "TOKEN IS NONE!!!")
+print("WEBHOOK_PATH:", WEBHOOK_PATH)
 
 app = Flask(__name__)
 
@@ -38,4 +41,5 @@ def webhook():
     return 'Invalid', 403
 
 if __name__ == '__main__':
+
     app.run(host='0.0.0.0', port=5000)
