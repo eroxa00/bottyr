@@ -12,13 +12,13 @@ if not TOKEN:
 print("BOT STARTED SUCCESSFULLY")
 print("BOT_TOKEN:", TOKEN[:10] + "..." if TOKEN else "MISSING")
 
-# Енді WEBHOOK_PATH-ты анықтаймыз
+# Енді WEBHOOK_PATH-ты анықтаймыз (print-тен кейін!)
 WEBHOOK_PATH = f'/{TOKEN}'
 print("WEBHOOK_PATH:", WEBHOOK_PATH)
 
 bot = telebot.TeleBot(TOKEN)
 
-# Қалған код (handler-лар, маршруттар) өзгермейді
+# Қалған код өзгермейді (handler-лар, маршруттар)
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Сәлем! Мен жаңа ботпын. Жазып көр 😎")
